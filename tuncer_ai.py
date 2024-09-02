@@ -75,7 +75,7 @@ if api_key:
         if user_input:
             combined_input = f"Document content: {extracted_text}\n\nUser question: {user_input}"
             response = call_gemini_api(api_key, combined_input)
-            st.write('Yapay Zeka Yanıtı:', response)
+            st.write(response)
         else:
             st.write('Please enter a query.')
 else:
