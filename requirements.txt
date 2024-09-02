@@ -1,0 +1,8 @@
+streamlit
+bs4
+pandas
+requests
+PyPDF2
+pdfreader
+python-docx
+google-generativeai
