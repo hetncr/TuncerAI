@@ -10,7 +10,7 @@ from google.api_core.exceptions import ResourceExhausted, InternalServerError
 # Function to call the Google Gemini AI API
 def call_gemini_api(api_key, user_input):
     genai.configure(api_key=api_key)
-    model = genai.GenerativeModel('gemini-1.0-pro-latest')
+    model = genai.GenerativeModel('gemini-1.5-pro-latest')
     
     retries = 3
     for attempt in range(retries):
