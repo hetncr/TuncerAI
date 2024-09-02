@@ -51,12 +51,12 @@ def extract_text_from_excel(uploaded_file):
 st.subheader("**:blue[TUNCER AI-YAPAY ZEKA]**", divider='rainbow')
 
 # Input for API key
-api_key = st.text_input('Enter your Google Gemini API key:', type='password')
+api_key = st.text_input('Google Gemini API anahtarını giriniz:', type='password')
 
 # Ensure the API key is entered before proceeding
 if api_key:
     # File uploader
-    uploaded_file = st.file_uploader('Upload a document (PDF, Word, Excel)', type=['pdf', 'docx', 'xlsx'])
+    uploaded_file = st.file_uploader('Belgenizi yükleyiniz (PDF, Word, Excel)', type=['pdf', 'docx', 'xlsx'])
 
     extracted_text = ''
     if uploaded_file is not None:
@@ -68,7 +68,7 @@ if api_key:
             extracted_text = extract_text_from_excel(uploaded_file)
 
     # Input for user query
-    user_input = st.text_input('Ask something to the AI about the document:')
+    user_input = st.text_input('Tuncer AI ile belge hakkında iletişime geçin:')
 
     # Submit button for user query
     if st.button('Submit'):
@@ -77,7 +77,7 @@ if api_key:
             response = call_gemini_api(api_key, combined_input)
             st.write(response)
         else:
-            st.write('Please enter a query.')
+            st.write('Lütfen sorunuzu ya da mesajınızı giriniz.')
 else:
-    st.write('Please enter your Google Gemini API key.')
+    st.write('Lütfen Google Gemini API anahtarını giriniz.')
 
