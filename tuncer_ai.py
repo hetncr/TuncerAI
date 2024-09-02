@@ -4,20 +4,27 @@ from io import BytesIO
 from PyPDF2 import PdfReader
 import docx
 import pandas as pd
+import time
+from google.api_core.exceptions import ResourceExhausted
 
 # Function to call the Google Gemini AI API
 def call_gemini_api(api_key, user_input):
     genai.configure(api_key=api_key)
     model = genai.GenerativeModel('gemini-1.0-pro-latest')
-    response = model.generate_content(user_input)
-
-    # Extract the relevant text from the response
-    try:
-        content = response.candidates[0].content.parts[0].text
-    except (AttributeError, IndexError):
-        content = "Failed to extract content from the AI response."
-
-    return content
+    
+    retries = 3
+    for attempt in range(retries):
+        try:
+            response = model.generate_content(user_input)
+            content = response.candidates[0].content.parts[0].text
+            return content
+        except (AttributeError, IndexError):
+            return "Failed to extract content from the AI response."
+        except ResourceExhausted:
+            if attempt < retries - 1:
+                time.sleep(2 ** attempt)  # Exponential backoff
+            else:
+                return "Resource exhausted. Please try again later."
 
 # Function to extract text from PDF using PdfReader
 def extract_text_from_pdf(uploaded_file):
@@ -73,3 +80,4 @@ if api_key:
             st.write('Please enter a query.')
 else:
     st.write('Please enter your Google Gemini API key.')
+
