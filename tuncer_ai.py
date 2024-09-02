@@ -5,7 +5,7 @@ from PyPDF2 import PdfReader
 import docx
 import pandas as pd
 import time
-from google.api_core.exceptions import ResourceExhausted
+from google.api_core.exceptions import ResourceExhausted, InternalServerError
 
 # Function to call the Google Gemini AI API
 def call_gemini_api(api_key, user_input):
@@ -20,11 +20,11 @@ def call_gemini_api(api_key, user_input):
             return content
         except (AttributeError, IndexError):
             return "Failed to extract content from the AI response."
-        except ResourceExhausted:
+        except (ResourceExhausted, InternalServerError):
             if attempt < retries - 1:
                 time.sleep(2 ** attempt)  # Exponential backoff
             else:
-                return "Resource exhausted. Please try again later."
+                return "Resource exhausted or internal server error. Please try again later."
 
 # Function to extract text from PDF using PdfReader
 def extract_text_from_pdf(uploaded_file):
@@ -65,7 +65,6 @@ if api_key:
             extracted_text = extract_text_from_word(uploaded_file)
         elif uploaded_file.type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
             extracted_text = extract_text_from_excel(uploaded_file)
-        st.text_area('Extracted Text', extracted_text, height=200)
 
     # Input for user query
     user_input = st.text_input('Ask something to the AI about the document:')
@@ -80,3 +79,4 @@ if api_key:
             st.write('Please enter a query.')
 else:
     st.write('Please enter your Google Gemini API key.')
+
