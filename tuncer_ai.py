@@ -80,4 +80,3 @@ if api_key:
             st.write('Please enter a query.')
 else:
     st.write('Please enter your Google Gemini API key.')
-
