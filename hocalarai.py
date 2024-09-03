@@ -47,8 +47,8 @@ def extract_text_from_excel(uploaded_file):
     return text
 
 # Streamlit app
-#st.title("**:blue[TUNCER AI]**")
-st.subheader("**:blue[TUNCER AI-YAPAY ZEKA]**", divider='rainbow')
+st.title("**:blue[HOCALAR AI]**")
+st.subheader("**:blue[Beyin Bedava]    :sunglasses:**", divider='rainbow')
 
 # Input for API key
 api_key = st.text_input('Google Gemini API anahtarını giriniz:', type='password')
