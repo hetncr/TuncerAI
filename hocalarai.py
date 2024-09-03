@@ -48,7 +48,7 @@ def extract_text_from_pdf(uploaded_file, chunk_size=5):
     return chunks
 
 # Function to extract text from Word documents
-def extract_text_from_word(uploaded_file, chunk_size=50):
+def extract_text_from_word(uploaded_file, chunk_size=5):
     doc = docx.Document(uploaded_file)
     chunks = []
     text = ''
@@ -99,14 +99,15 @@ if api_key:
     # Submit button for user query
     if st.button('Submit'):
         if user_input:
-            responses = []
+            combined_responses = []
             for chunk in extracted_chunks:
                 combined_input = f"Document content: {chunk}\n\nUser question: {user_input}"
                 response = call_gemini_api(api_key, combined_input, last_call_time)
                 last_call_time = time.time()  # Update last call time for rate limiting
-                responses.append(response)
+                combined_responses.append(response)
                 time.sleep(5)  # Delay between requests to avoid rate limits
-            st.write('\n\n'.join(responses))
+            final_response = " ".join(combined_responses)
+            st.write(final_response)
         else:
             st.write('Lütfen sorunuzu ya da mesajınızı giriniz.')
 else:
