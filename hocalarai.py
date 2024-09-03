@@ -34,7 +34,7 @@ def call_gemini_api(api_key, user_input, last_call_time=None):
                 return "Resource exhausted or internal server error. Please try again later."
 
 # Function to extract text from PDF in chunks
-def extract_text_from_pdf(uploaded_file, chunk_size=20):
+def extract_text_from_pdf(uploaded_file, chunk_size=10):
     reader = PdfReader(BytesIO(uploaded_file.read()))
     chunks = []
     text = ''
