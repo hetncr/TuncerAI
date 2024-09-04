@@ -68,7 +68,7 @@ if api_key:
             extracted_text = extract_text_from_excel(uploaded_file)
 
     # Input for user query
-    user_input = st.text_input('Tuncer AI ile belge hakkında iletişime geçin:')
+    user_input = st.text_input('HOCALAR AI ile belge hakkında iletişime geçin:')
 
     # Submit button for user query
     if st.button('Submit'):
