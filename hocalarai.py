@@ -71,7 +71,7 @@ if api_key:
     user_input = st.text_input('HOCALAR AI ile belge hakkında iletişime geçin:')
 
     # Submit button for user query
-    if st.button('Submit'):
+    if st.button('Gönder'):
         if user_input:
             combined_input = f"Document content: {extracted_text}\n\nUser question: {user_input}"
             response = call_gemini_api(api_key, combined_input)
